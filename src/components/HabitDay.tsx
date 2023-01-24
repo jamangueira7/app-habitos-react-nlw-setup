@@ -1,4 +1,5 @@
 import * as Popover from '@radix-ui/react-popover';
+import { ProgressBar } from './ProgressBar';
 export function HabitDay() {
 
   return (
@@ -9,11 +10,7 @@ export function HabitDay() {
           <span className="font-semibold text-zinc-400">Segunda-feita</span>
           <span className="mt-1 font-extrabold leading-tight text-3xl">22-01</span>
 
-          <div className="h-3 roundend-xl bg-zinc-700 w-full mt-4">
-            <div className="h-3 roundend-xl bg-violet-600 w-3/4">
-
-            </div>
-          </div>
+          <ProgressBar progress={75} />
 
           <Popover.Arrow height={8} width={16} className="fill-zinc-900" />
         </Popover.Content>
