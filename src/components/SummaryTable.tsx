@@ -1,13 +1,29 @@
 import { HabitDay } from './HabitDay';
 import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-year-beginning';
+import { useEffect, useState } from 'react';
+import { api } from '../lib/axios';
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+const summaryDates = generateDatesFromYearBeginning();
+
+const minimunSummaryDatesSize = 18 * 7;
+const amountOfDaysToFill = minimunSummaryDatesSize - summaryDates.length;
+
+type Summary = Array<{
+  id: string;
+  date: string;
+  amount: number;
+  completed: number;
+}>
+
 export function SummaryTable() {
+  const [summary, setSummary] = useState<Summary>([]);
 
-  const summaryDates = generateDatesFromYearBeginning();
-
-  const minimunSummaryDatesSize = 18 * 7;
-  const amountOfDaysToFill = minimunSummaryDatesSize - summaryDates.length;
+  useEffect(() => {
+    api.get('summary').then(response => {
+      setSummary(response.data);
+    });
+  }, []);
 
   return (
     <div className="w-full flex">
