@@ -1,6 +1,7 @@
 import { HabitDay } from './HabitDay';
 import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-year-beginning';
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { api } from '../lib/axios';
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
@@ -40,11 +41,16 @@ export function SummaryTable() {
 
       <div className="grid grid-rows-7 grid-flow-col gap-3">
         {summaryDates.map(date => {
+          const dayInSummary = summary.find(day => {
+            return dayjs(date).isSame(day.date, 'day');
+          });
+
           return (
             <HabitDay
               key={date.toString()}
-              amount={5}
-              completed={Math.round(Math.random() * 5)}
+              date={date}
+              amount={dayInSummary?.amount}
+              completed={dayInSummary?.completed}
             />
           )
         })}
