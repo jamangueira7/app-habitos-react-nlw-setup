@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 
 interface HabitListProps {
   date: Date;
+  onCompletedChanged: (completed: number) => void
 }
 
 interface HabitsInfo {
@@ -13,10 +14,10 @@ interface HabitsInfo {
     id: string;
     title: string;
     created_at: string;
-  },
+  }[],
   completedHabits: string[]
 }
-export function HabitList({ date }: HabitListProps) {
+export function HabitList({ date, onCompletedChanged }: HabitListProps) {
 
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
 
@@ -50,6 +51,8 @@ export function HabitList({ date }: HabitListProps) {
       possibleHabits: habitsInfo!.possibleHabits,
       completedHabits,
     });
+
+    onCompletedChanged(completedHabits.length);
   }
   return (
     <div className="mt-6 flex flex-col gap-3">
@@ -75,11 +78,6 @@ export function HabitList({ date }: HabitListProps) {
           );
         })
       }
-
-
-
-
-
     </div>
   );
 }
